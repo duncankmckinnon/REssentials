@@ -2,6 +2,13 @@
 #' extract all performance metrics for a binomial classification model
 #'
 #' @param mod a general linear model of family binomial
+#' @param pi_0 the threshold of determination used in classifaction
+#' @return A list of classification performance metrics including the vector of predictions y.hat and the confusion matrix
+#' @examples
+#' X <- rnorm(100)
+#' Y <- ifelse(X < 0.5, 0, 1 - sample(0:1, prob = c(0.9, .1)))
+#' f <- glm(Y ~ X, family='binomial')
+#' classification_metrics(f)
 classification_metrics <- function(mod, pi_0 = 0.5){
   y.hat <- factor(ifelse(fitted.values(mod) >= pi_0, 1, 0), levels = c(1,0), labels = c('1','0'), ordered = T)
   y <- factor(mod$y, levels = c(1,0), labels = c('1','0'), ordered = T)
