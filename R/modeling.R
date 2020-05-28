@@ -85,10 +85,17 @@ train_test_val <- function(data, prop_train = 0.8, prop_test = 0, prop_validatio
 }
 
 
-
+#' helper function for splitting out data sets by proportion
+#'
+#' @param data a data.frame type object
+#' @param prop the proportion of the data in the primary subset
+#' @return a list with the primary and secondary subsets in specified proportion
 train_test_val._split <- function(data, prop){
   n <- dim(data)[1]
+
+  # sample indices for secondary subset
   indices <- sample(1:n, floor((1 - prop) * n))
+
   return(
     list(
       data[-indices,],
