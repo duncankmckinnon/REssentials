@@ -7,8 +7,10 @@
 #' @returns a grouped summary table for the attribute
 attribute.summary <- function(data, summary_attr, group_attr = NULL){
   if(is.null(group_attr)) {
+    ### need to use deprecated tidy tools until updated
     response <- suppressWarnings(dplyr::select_(data, summary_attr))
   } else {
+    ### need to use deprecated tidy tools until updated
     response <- suppressWarnings(dplyr::group_by_(dplyr::select_(data, summary_attr, group_attr), group_attr) )
   }
   return( attribute.stats(response, summary_attr) )
@@ -22,8 +24,13 @@ attribute.summary <- function(data, summary_attr, group_attr = NULL){
 attribute.stats <- function(data, stats_attr){
   attribute_types <- attribute.types(data)
   stats_attr_ <- as.name(stats_attr)
+
+
   if( attribute_types[stats_attr] %in% c('integer', 'numeric', 'complex', 'double') ){
+
+    # summarize numeric type attributes
     return( suppressWarnings(
+      ### need to use deprecated tidy tools until updated
       dplyr::summarise_( data,
                          min = lazyeval::interp(~min(var, na.rm = T), var = stats_attr_),
                          p25 = lazyeval::interp(~quantile(var, probs=0.25, na.rm = T), var = stats_attr_),
@@ -32,8 +39,14 @@ attribute.stats <- function(data, stats_attr){
                          p75 = lazyeval::interp(~quantile(var, probs=0.75, na.rm = T), var = stats_attr_),
                          max = lazyeval::interp(~max(var, na.rm = T), var = stats_attr_),
                          sd = lazyeval::interp(~sd(var, na.rm = T), var = stats_attr_))))
+
   } else if( attribute_types[stats_attr] %in% c('factor', 'logical', 'character') ){
-    return( suppressWarnings(dplyr::count_( data, stats_attr_)))
+
+    # summarize categorical type attributes
+    return( suppressWarnings(
+      ### need to use deprecated tidy tools until updated
+      dplyr::count_( data, stats_attr_)))
+
   }
 }
 
