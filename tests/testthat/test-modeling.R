@@ -7,8 +7,8 @@ test.mod <- glm(Y ~ X, family='binomial', data = test.data)
 
 test_that("classification metrics works with model", {
   metrics.mod <- classification_metrics(mod = test.mod)
-  expect_s3_class(metrics.mod $y.hat, 'factor')
-  expect_s3_class(metrics.mod $confmatrix, 'table')
+  expect_s3_class(metrics.mod$y.hat, 'factor')
+  expect_s3_class(metrics.mod$confmatrix, 'table')
   expect_equal(
     all( sapply( X = c(
       'tpos',
@@ -32,6 +32,7 @@ test_that("classification metrics works with model", {
         'fomr',
         'tnr',
         'npv',
+        'ppv',
         'F1'
       ), FUN = (function(x){
         return( class( metrics.mod[[x]] ))
@@ -72,6 +73,7 @@ test_that("classification metrics works with y and y.hat", {
       'fomr',
       'tnr',
       'npv',
+      'ppv',
       'F1'
     ), FUN = (function(x){
       return( class( metrics.y[[x]] ))

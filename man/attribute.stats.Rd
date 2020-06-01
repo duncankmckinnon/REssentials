@@ -4,7 +4,7 @@
 \alias{attribute.stats}
 \title{get the summary statistics for an attribute (grouped or otherwise)}
 \usage{
-attribute.stats(data, stats_attr)
+attribute.stats(data, stats_attr = NULL, .checkAssertions = T)
 }
 \arguments{
 \item{data}{a data frame or tibble type object}
@@ -16,4 +16,18 @@ a tibble with the summary stats for the specified column/grouping
 }
 \description{
 get the summary statistics for an attribute (grouped or otherwise)
+}
+\examples{
+sample.data <- data.frame('chr' = sample(c('a','b','c'), 100, T),
+                          'int' = sample(c(1,2,3), 100, T),
+                          'dttm' = sample(as.Date.character(paste('2020-01-', 1:30, sep = '')), 100, T))
+
+# get category type stats
+attribute.stats(sample.data, 'chr')
+
+# get numeric type stats
+attribute.stats(sample.data, 'int')
+
+# get date type stats
+attribute.stats(sample.data, 'dttm')
 }

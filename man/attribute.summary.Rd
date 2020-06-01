@@ -4,7 +4,12 @@
 \alias{attribute.summary}
 \title{generate summary for a given attribute grouped by a target attribute}
 \usage{
-attribute.summary(data, summary_attr, group_attr = NULL)
+attribute.summary(
+  data,
+  summary_attr = NULL,
+  group_attr = NULL,
+  .checkAssertions = T
+)
 }
 \arguments{
 \item{data}{a data frame or tibble type object}
@@ -14,8 +19,21 @@ attribute.summary(data, summary_attr, group_attr = NULL)
 \item{group_attr}{a column label to group by before summarizing (optional)}
 }
 \value{
-a grouped summary table for the attribute
+a grouped summary table for the attribute(s)
 }
 \description{
 generate summary for a given attribute grouped by a target attribute
+}
+\examples{
+# summarise all columns
+attribute.summary(iris)
+
+# summarise only 'Petal.Length'
+attribute.summary(iris, 'Petal.Length')
+
+# summarise 'Petal.Length' grouped by 'Species'
+attribute.summary(iris, 'Petal.Length', 'Species')
+
+# summarise all columns grouped by 'Species'
+attribute.summary(iris, group_attr = 'Species')
 }

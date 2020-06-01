@@ -3,7 +3,27 @@
 #'
 #' @param mod a general linear model of family binomial
 #' @param pi_0 the threshold of determination used in classifaction (optional, default = 0.5)
-#' @return A list of classification performance metrics including the vector of predictions y.hat and the confusion matrix
+#' @return A list of classification performance metrics derived from the confusion matrix
+#' \itemize{
+#'  \item{y.hat}{      : the model classification predictions}
+#'  \item{confmatrix}{ : the confusion matrix}
+#'  \item{tpos}{       : count of true positives}
+#'  \item{tneg}{       : count of true negatives}
+#'  \item{fneg}{       : count of false negatives}
+#'  \item{fpos}{       : count of false positives}
+#'  \item{acc}{        : accuracy score}
+#'  \item{recall}{     : recall score}
+#'  \item{precision}{  : precision score}
+#'  \item{tpr}{        : true positive rate (same as recall)}
+#'  \item{fpr}{        : false positive rate}
+#'  \item{fdcr}{       : false discovery rate}
+#'  \item{fnr}{        : false negative rate}
+#'  \item{fomr}{       : false omission rate}
+#'  \item{tnr}{        : true negative rate}
+#'  \item{ppv}{        : positive predicted value (same as precision)}
+#'  \item{npv}{        : negative predicted value}
+#'  \item{F1}{         : F1 scoring metric}
+#' }
 #' @examples
 #' X <- rnorm(100)
 #' Y <- ifelse(X < 0.5, 0, 1 - sample(0:1, prob = c(0.9, .1)))
@@ -36,10 +56,7 @@ classification_metrics <- function(y, y.hat, mod = NULL, pi_0 = 0.5){
 .classification_metrics <- function(y, y.hat){
   # get confusion matrix and individual entries
   confm <- table(y.hat, y)
-  tp <- confm[1]
-  fn <- confm[2]
-  fp <- confm[3]
-  tn <- confm[4]
+  zeallot::`%<-%`(c(tp,fn,fp,tn), confm)
 
   # calculate and return all classification metrics
   recall <- (tp / (tp + fn))
@@ -61,6 +78,7 @@ classification_metrics <- function(y, y.hat, mod = NULL, pi_0 = 0.5){
       'fnr' = (fn / (tp + fn)),
       'fomr' = (fn / (tn + fn)),
       'tnr' = (tn / (tn + fp)),
+      'ppv' = precision,
       'npv' = (tn / (tn + fn)),
       'F1' = 2 * ((precision * recall) / (precision + recall))
     )

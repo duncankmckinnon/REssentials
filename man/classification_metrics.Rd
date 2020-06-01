@@ -4,7 +4,7 @@
 \alias{classification_metrics}
 \title{extract all performance metrics for a binomial classification model}
 \usage{
-classification_metrics(mod, pi_0 = 0.5)
+classification_metrics(y, y.hat, mod = NULL, pi_0 = 0.5)
 }
 \arguments{
 \item{mod}{a general linear model of family binomial}
@@ -12,7 +12,27 @@ classification_metrics(mod, pi_0 = 0.5)
 \item{pi_0}{the threshold of determination used in classifaction (optional, default = 0.5)}
 }
 \value{
-A list of classification performance metrics including the vector of predictions y.hat and the confusion matrix
+A list of classification performance metrics derived from the confusion matrix
+\itemize{
+ \item{y.hat}{      : the model classification predictions}
+ \item{confmatrix}{ : the confusion matrix}
+ \item{tpos}{       : count of true positives}
+ \item{tneg}{       : count of true negatives}
+ \item{fneg}{       : count of false negatives}
+ \item{fpos}{       : count of false positives}
+ \item{acc}{        : accuracy score}
+ \item{recall}{     : recall score}
+ \item{precision}{  : precision score}
+ \item{tpr}{        : true positive rate (same as recall)}
+ \item{fpr}{        : false positive rate}
+ \item{fdcr}{       : false discovery rate}
+ \item{fnr}{        : false negative rate}
+ \item{fomr}{       : false omission rate}
+ \item{tnr}{        : true negative rate}
+ \item{ppv}{        : positive predicted value (same as precision)}
+ \item{npv}{        : negative predicted value}
+ \item{F1}{         : F1 scoring metric}
+}
 }
 \description{
 extract all performance metrics for a binomial classification model
