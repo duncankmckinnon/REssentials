@@ -1,2 +1,2 @@
 # REssentials
-The constantly evolving set of essential R utility tools and functions that I have found to be indispensable in daily work
+A set of useful tools and functions that I want to maintain for reuse
